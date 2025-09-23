@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Lista de Funcionários</h1>
+<table class="table table-striped">
+    <thead>
+        <tr><th>Nome</th><th>CPF</th><th>Condição</th><th>Salário Efetivo</th></tr>
+    </thead>
+    <tbody>
+        {% for func in funcionarios %}
+        <tr><td>{{ func.nome }}</td><td>{{ func.cpf }}</td><td>{{ func.condicao }}</td><td>R$ {{ func.salario_efetivo }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'cria_funcionario' %}" class="btn btn-primary">Cadastrar Novo</a>
+{% endblock %}

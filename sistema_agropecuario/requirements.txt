@@ -1,0 +1,6 @@
+Django==4.2.16
+django-ledger==0.7.10
+psycopg2-binary==2.9.9
+python-decouple==3.8
+django-google-maps==0.14.0
+django-mermaid==0.1.0

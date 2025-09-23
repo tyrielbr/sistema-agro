@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Máquinas</h1>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Equipamentos</h5>
+        <table class="table">
+            <thead><tr><th>Nome</th><th>Marca</th><th>Horas</th></tr></thead>
+            <tbody>
+                {% for eq in equipamentos %}
+                <tr><td>{{ eq.nome }}</td><td>{{ eq.marca }}</td><td>{{ eq.horas_registradas }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Ordens de Serviço</h5>
+        <table class="table">
+            <thead><tr><th>Data</th><th>Custo</th></tr></thead>
+            <tbody>
+                {% for ordem in ordens %}
+                <tr><td>{{ ordem.data }}</td><td>R$ {{ ordem.custo }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Alertas de Manutenção</h5>
+        <ul>
+            {% for alerta in alertas %}
+            <li>{{ alerta }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<a href="{% url 'cria_abastecimento' %}" class="btn btn-primary">Registrar Abastecimento</a>
+<a href="{% url 'cria_equipamento' %}" class="btn btn-success">Cadastrar Equipamento</a>
+{% endblock %}

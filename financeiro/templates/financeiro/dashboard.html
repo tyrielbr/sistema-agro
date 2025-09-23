@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Financeiro</h1>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Fluxo de Caixa</h5>
+        <p>Fluxo Atual: R$ {{ fluxo }}</p>
+    </div>
+</div>
+<a href="{% url 'vencimentos' %}" class="btn btn-primary">Vencimentos</a>
+<a href="{% url 'cria_contrato' %}" class="btn btn-success">Cadastrar Contrato</a>
+<!-- Adicione links para outras páginas -->
+{% endblock %}

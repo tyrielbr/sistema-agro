@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Fluxogramas do Sistema</h1>
+<div class="mermaid">
+    {{ fluxograma_geral }}
+</div>
+<script>mermaid.initialize({startOnLoad: true});</script>
+{% endblock %}

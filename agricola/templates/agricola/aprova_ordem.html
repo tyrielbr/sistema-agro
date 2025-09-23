@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Aprovar Ordem de Serviço #{{ ordem.id }}</h1>
+<p>Talhão: {{ ordem.talhao }} | Cultura: {{ ordem.cultura }} | Tipo: {{ ordem.tipo }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Aprovar</button>
+</form>
+{% endblock %}

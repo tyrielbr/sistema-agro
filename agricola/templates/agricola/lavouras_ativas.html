@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Lavouras Ativas</h1>
+<table class="table table-striped">
+    <thead>
+        <tr><th>Nome</th><th>Período Ideal</th></tr>
+    </thead>
+    <tbody>
+        {% for lavoura in lavouras %}
+        <tr><td>{{ lavoura.nome }}</td><td>{{ lavoura.periodo_ideal_inicio }} a {{ lavoura.periodo_ideal_fim }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

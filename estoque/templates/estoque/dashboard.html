@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Estoque</h1>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Insumos Granel</h5>
+        <table class="table">
+            <thead><tr><th>Nome</th><th>Quantidade</th></tr></thead>
+            <tbody>
+                {% for item in granel %}
+                <tr><td>{{ item.nome }}</td><td>{{ item.quantidade }} {{ item.unidade }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Insumos Lavoura</h5>
+        <table class="table">
+            <!-- Similar para lavoura -->
+        </table>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Insumos Máquinas</h5>
+        <table class="table">
+            <!-- Similar para maquinas -->
+        </table>
+    </div>
+</div>
+{% endblock %}
