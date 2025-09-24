@@ -1,0 +1,138 @@
+:root {
+    --primary-orange: #FF6B00;
+    --secondary-green: #228B22;
+    --neutral-white: #FFFFFF;
+    --earth-brown: #8B4513;
+    --text-dark: #333333;
+    --bg-light: #F5F5F5;
+    --transition: 0.3s ease;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bg-green {
+    background-color: var(--secondary-green);
+  }
+
+  .bg-brown {
+    background-color: var(--earth-brown);
+  }
+
+  .btn-primary {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    transition: var(--transition);
+  }
+
+  .btn-primary:hover {
+    background-color: darken(var(--primary-orange), 10%);
+    transform: scale(1.05);
+  }
+
+  .nav-link {
+    color: var(--neutral-white);
+    transition: var(--transition);
+  }
+
+  .nav-link:hover {
+    color: var(--primary-orange);
+  }
+
+  .table {
+    background-color: var(--neutral-white);
+    border: 1px solid var(--earth-brown);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .table thead th {
+    background-color: var(--secondary-green);
+    color: var(--neutral-white);
+  }
+
+  .card {
+    border: 1px solid var(--earth-brown);
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .row {
+      flex-direction: column;
+    }
+    .col-md-4 {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .table {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Interatividade */
+  .toggle-dark {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-orange);
+    color: var(--neutral-white);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .dark-mode {
+    --bg-light: #333333;
+    --text-dark: #FFFFFF;
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    .table {
+      background-color: #444444;
+    }
+  }
+
+  /* Suporte a Gráficos */
+  canvas {
+    max-width: 100%;
+    height: auto !important;
+    margin: 20px 0;
+  }
+
+  /* Colunas e Linhas */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+  }
+
+  .col-md-4, .col-md-6 {
+    flex: 1;
+    padding: 15px;
+  }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

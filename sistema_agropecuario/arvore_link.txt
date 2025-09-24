@@ -1,0 +1,39 @@
+Sistema Agropecuário
+├── / (home -> index.html)
+├── /login/ (LoginView -> registration/login.html)
+├── /logout/ (LogoutView -> registration/logged_out.html)
+├── /admin/ (Django Admin -> built-in)
+├── /fluxogramas/ (fluxogramas -> fluxogramas.html)
+├── /dashboard-master/ (dashboard -> dashboard_master/dashboard.html)
+├── /fazendas/
+│   ├── / (lista_fazendas -> fazendas/lista_fazendas.html)
+│   ├── /criar/ (cria_fazenda -> fazendas/cria_fazenda.html)
+│   └── /talhao/<id>/mapa/ (mapa_talhao -> fazendas/mapa_talhao.html)
+├── /agricola/
+│   ├── / (dashboard -> agricola/dashboard.html)
+│   ├── /ordens/ (lista_ordens -> agricola/lista_ordens.html)
+│   ├── /ordens/criar/ (cria_ordem -> agricola/cria_ordem.html)
+│   ├── /ordens/<id>/aprovar/ (aprova_ordem -> agricola/aprova_ordem.html)
+│   ├── /ordens/realizadas/ (ordens_realizadas -> agricola/ordens_realizadas.html)
+│   ├── /ordens/planejadas/ (ordens_planejadas -> agricola/ordens_planejadas.html)
+│   ├── /lavouras/ativas/ (lavouras_ativas -> agricola/lavouras_ativas.html)
+│   └── /produtividade/historico/ (historico_produtividade -> agricola/historico_produtividade.html)
+├── /estoque/
+│   └── / (dashboard -> estoque/dashboard.html)
+├── /administrativo/
+│   ├── / (dashboard -> administrativo/dashboard.html)
+│   ├── /funcionarios/ (lista_funcionarios -> administrativo/lista_funcionarios.html)
+│   └── /funcionarios/criar/ (cria_funcionario -> administrativo/cria_funcionario.html)
+├── /maquinas/
+│   ├── / (dashboard -> maquinas/dashboard.html)
+│   ├── /abastecimento/criar/ (cria_abastecimento -> maquinas/cria_abastecimento.html)
+│   └── /equipamento/criar/ (cria_equipamento -> maquinas/cria_equipamento.html)
+├── /financeiro/
+│   ├── / (dashboard -> financeiro/dashboard.html)
+│   ├── /vencimentos/ (vencimentos -> financeiro/vencimentos.html)
+│   ├── /contrato/criar/ (cria_contrato -> financeiro/cria_contrato.html)
+│   └── /financiamento/criar/ (cria_financiamento -> financeiro/cria_financiamento.html)
+└── /comercial/
+    ├── / (dashboard -> comercial/dashboard.html)
+    ├── /transacao/criar/ (cria_compra_venda -> comercial/cria_compra_venda.html)
+    └── /fornecedor-cliente/criar/ (cria_fornecedor_cliente -> comercial/cria_fornecedor_cliente.html)

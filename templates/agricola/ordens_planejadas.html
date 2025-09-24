@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Ordens Planejadas</h1>
+<table class="table fade-in">
+    <thead><tr><th>ID</th><th>Talhão</th><th>Cultura</th><th>Tipo</th></tr></thead>
+    <tbody>
+        {% for ordem in ordens %}
+        <tr><td>{{ ordem.id }}</td><td>{{ ordem.talhao }}</td><td>{{ ordem.cultura }}</td><td>{{ ordem.tipo }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

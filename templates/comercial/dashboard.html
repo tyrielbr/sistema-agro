@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Comercial</h1>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Compras Totais</h2>
+        <p>R$ {{ compras }}</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Vendas Realizadas</h2>
+        <p>R$ {{ vendas }}</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Estoque Disponível</h2>
+        <p>{{ estoque_disponivel }} unidades</p>
+    </div>
+</div>
+<canvas id="estimativaChart" class="fade-in"></canvas>
+<script>
+    var ctx = document.getElementById('estimativaChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Estimativa'], datasets: [{ label: 'Vendas', data: [{{ estimativa_vendas }}] }] }
+    });
+</script>
+{% endblock %}

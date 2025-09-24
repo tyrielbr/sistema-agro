@@ -1,0 +1,102 @@
+/home/felip/sistema-agropecuario/
+├── sistema_agropecuario/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── views.py
+│   └── wsgi.py
+├── fazendas/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── agricola/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── estoque/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   └── urls.py
+├── administrativo/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── maquinas/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── financeiro/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── comercial/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── urls.py
+├── dashboard_master/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   └── urls.py
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── fluxogramas.html
+│   ├── registration/
+│   │   ├── login.html
+│   │   └── logged_out.html
+│   ├── fazendas/
+│   │   ├── lista_fazendas.html
+│   │   ├── cria_fazenda.html
+│   │   └── mapa_talhao.html
+│   ├── agricola/
+│   │   ├── dashboard.html
+│   │   ├── lista_ordens.html
+│   │   ├── cria_ordem.html
+│   │   ├── aprova_ordem.html
+│   │   ├── ordens_realizadas.html
+│   │   ├── ordens_planejadas.html
+│   │   ├── lavouras_ativas.html
+│   │   └── historico_produtividade.html
+│   ├── estoque/
+│   │   └── dashboard.html
+│   ├── administrativo/
+│   │   ├── dashboard.html
+│   │   ├── cria_funcionario.html
+│   │   └── lista_funcionarios.html
+│   ├── maquinas/
+│   │   ├── dashboard.html
+│   │   ├── cria_abastecimento.html
+│   │   └── cria_equipamento.html
+│   ├── financeiro/
+│   │   ├── dashboard.html
+│   │   ├── vencimentos.html
+│   │   ├── cria_contrato.html
+│   │   └── cria_financiamento.html
+│   ├── comercial/
+│   │   ├── dashboard.html
+│   │   ├── cria_compra_venda.html
+│   │   └── cria_fornecedor_cliente.html
+│   └── dashboard_master/
+│       └── dashboard.html
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+├── staticfiles/  # Criado após python manage.py collectstatic
+├── manage.py
+└── .gitignore

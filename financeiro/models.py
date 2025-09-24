@@ -8,7 +8,7 @@ class ContaAgro(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.descricao} ({self.account.code})"
+        return self.descricao
 
 class Vencimento(models.Model):
     conta = models.ForeignKey(ContaAgro, on_delete=models.CASCADE)

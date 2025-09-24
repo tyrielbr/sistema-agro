@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Vencimentos</h1>
+<form method="get" class="fade-in">
+    <select name="periodo">
+        <option value="diario">Diário</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensal">Mensal</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+<table class="table fade-in">
+    <thead><tr><th>Data</th><th>Valor</th><th>Quitado</th></tr></thead>
+    <tbody>
+        {% for v in vencimentos %}
+        <tr><td>{{ v.data_vencimento }}</td><td>R$ {{ v.valor }}</td><td>{{ v.quitado|yesno:"Sim,Não" }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

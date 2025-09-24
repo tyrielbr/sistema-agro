@@ -3,8 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import CentroCusto, Funcionario
 from .forms import FuncionarioForm
-from maquinas.models import Manutencao  # Custos máquinas
-from administrativo.models import Funcionario  # Custos pessoal
+from maquinas.models import Manutencao
 
 @login_required
 def dashboard(request):
@@ -22,10 +21,10 @@ def cria_funcionario(request):
             funcionario = form.save(commit=False)
             funcionario.owner = request.user
             funcionario.save()
-            messages.success(request, 'Funcionário cadastrado com sucesso.')
+            messages.success(request, 'Funcionário cadastrado.')
             return redirect('administrativo_dashboard')
         else:
-            messages.error(request, 'Erro no formulário. Verifique os campos obrigatórios.')
+            messages.error(request, 'Erro no formulário.')
     else:
         form = FuncionarioForm()
     return render(request, 'administrativo/cria_funcionario.html', {'form': form})

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Lista de Ordens de Serviço</h1>
+<table class="table fade-in">
+    <thead><tr><th>ID</th><th>Talhão</th><th>Cultura</th><th>Tipo</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for ordem in ordens %}
+        <tr><td>{{ ordem.id }}</td><td>{{ ordem.talhao }}</td><td>{{ ordem.cultura }}</td><td>{{ ordem.tipo }}</td><td>{{ ordem.aprovado|yesno:"Aprovada,Pendente" }}</td><td><a href="{% url 'aprova_ordem' ordem.id %}" class="btn btn-primary">Aprovar</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'cria_ordem' %}" class="btn btn-success">Criar Ordem</a>
+{% endblock %}

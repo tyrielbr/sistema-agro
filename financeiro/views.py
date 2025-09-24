@@ -3,22 +3,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import timedelta, date
-from .models import Vencimento, Contrato, Financiamento, ContaAgro
+from .models import Vencimento, Contrato, Financiamento
 from .forms import VencimentoForm, ContratoForm, FinanciamentoForm
 from django.db.models import Sum
 
 @login_required
 def dashboard(request):
-    entradas = Vencimento.objects.filter(
-        conta__account__balance_type='credit', quitado=True, owner=request.user
-    ).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(
-        conta__account__balance_type='credit', quitado=True
-    ).aggregate(total=Sum('valor'))['total'] or 0
-    saidas = Vencimento.objects.filter(
-        conta__account__balance_type='debit', quitado=True, owner=request.user
-    ).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(
-        conta__account__balance_type='debit', quitado=True
-    ).aggregate(total=Sum('valor'))['total'] or 0
+    entradas = Vencimento.objects.filter(conta__balance_type='credit', quitado=True, owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(conta__balance_type='credit', quitado=True).aggregate(total=Sum('valor'))['total'] or 0
+    saidas = Vencimento.objects.filter(conta__balance_type='debit', quitado=True, owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(conta__balance_type='debit', quitado=True).aggregate(total=Sum('valor'))['total'] or 0
     fluxo = entradas - saidas
     context = {'fluxo': fluxo}
     return render(request, 'financeiro/dashboard.html', context)

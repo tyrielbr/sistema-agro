@@ -1,3 +1,2 @@
 from django.db import models
-
-# Create your models here.
+# Sem models, apenas views para agregação

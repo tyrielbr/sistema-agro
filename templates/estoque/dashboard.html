@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Estoque</h1>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <h2>Insumos Granel</h2>
+        <table class="table fade-in">
+            <thead><tr><th>Nome</th><th>Quantidade</th></tr></thead>
+            <tbody>
+                {% for item in granel %}
+                <tr><td>{{ item.nome }}</td><td>{{ item.quantidade }} {{ item.unidade }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4 mb-3">
+        <h2>Insumos Lavoura</h2>
+        <table class="table fade-in">
+            <thead><tr><th>Nome</th><th>Quantidade</th></tr></thead>
+            <tbody>
+                {% for item in lavoura %}
+                <tr><td>{{ item.nome }}</td><td>{{ item.quantidade }} {{ item.unidade }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4 mb-3">
+        <h2>Insumos Máquinas</h2>
+        <table class="table fade-in">
+            <thead><tr><th>Nome</th><th>Quantidade</th></tr></thead>
+            <tbody>
+                {% for item in maquinas %}
+                <tr><td>{{ item.nome }}</td><td>{{ item.quantidade }} {{ item.unidade }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

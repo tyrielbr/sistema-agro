@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard Financeiro</h1>
+<div class="row">
+    <div class="col-md-12">
+        <p>Fluxo de Caixa: R$ {{ fluxo }}</p>
+        <canvas id="fluxoChart" class="fade-in"></canvas>
+        <script>
+            var ctx = document.getElementById('fluxoChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: { labels: ['Fluxo'], datasets: [{ label: 'Fluxo', data: [{{ fluxo }}] }] }
+            });
+        </script>
+    </div>
+</div>
+<a href="{% url 'vencimentos' %}" class="btn btn-primary">Ver Vencimentos</a>
+{% endblock %}

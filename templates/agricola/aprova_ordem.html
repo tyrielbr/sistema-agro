@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Aprovar Ordem de Serviço #{{ ordem.id }}</h1>
+<form method="post" class="fade-in">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Aprovar</button>
+</form>
+{% endblock %}

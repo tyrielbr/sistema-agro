@@ -11,7 +11,7 @@ def dashboard(request):
     compras = CompraVenda.objects.filter(tipo='compra', owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else CompraVenda.objects.filter(tipo='compra').aggregate(total=Sum('valor'))['total'] or 0
     vendas = CompraVenda.objects.filter(tipo='venda', owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else CompraVenda.objects.filter(tipo='venda').aggregate(total=Sum('valor'))['total'] or 0
     estoque_disponivel = Produto.objects.filter(owner=request.user).aggregate(total=Sum('quantidade'))['total'] or 0 if not request.user.is_superuser else Produto.objects.aggregate(total=Sum('quantidade'))['total'] or 0
-    estimativa_vendas = vendas * 1.1  # Simples projeção +10%
+    estimativa_vendas = vendas * 1.1
     context = {'compras': compras, 'vendas': vendas, 'estoque_disponivel': estoque_disponivel, 'estimativa_vendas': estimativa_vendas}
     return render(request, 'comercial/dashboard.html', context)
 
@@ -26,6 +26,8 @@ def cria_compra_venda(request):
             form.save_m2m()
             messages.success(request, 'Transação cadastrada.')
             return redirect('comercial_dashboard')
+        else:
+            messages.error(request, 'Erro no formulário.')
     else:
         form = CompraVendaForm()
     return render(request, 'comercial/cria_compra_venda.html', {'form': form})
@@ -40,6 +42,8 @@ def cria_fornecedor_cliente(request):
             obj.save()
             messages.success(request, 'Fornecedor/Cliente cadastrado.')
             return redirect('comercial_dashboard')
+        else:
+            messages.error(request, 'Erro no formulário.')
     else:
         form = FornecedorClienteForm()
     return render(request, 'comercial/cria_fornecedor_cliente.html', {'form': form})

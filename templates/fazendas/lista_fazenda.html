@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Fazendas Cadastradas</h1>
+<div class="row">
+    {% for fazenda in fazendas %}
+    <div class="col-md-4 mb-3">
+        <div class="card fade-in">
+            <div class="card-body">
+                <h5 class="card-title">{{ fazenda.nome }}</h5>
+                <p>Localização: {{ fazenda.localizacao }}</p>
+                <p>Área Total: {{ fazenda.area_total }} ha</p>
+                <a href="{% url 'mapa_talhao' fazenda.id %}" class="btn btn-primary">Ver Mapa</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<a href="{% url 'cria_fazenda' %}" class="btn btn-success">Cadastrar Fazenda</a>
+{% endblock %}

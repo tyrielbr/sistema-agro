@@ -1,30 +1,28 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from fazendas.models import Talhao
-from estoque.models import Insumo
 from django.contrib.auth.models import User
 
 class Cultura(models.Model):
     nome = models.CharField(max_length=50)
     periodo_ideal_inicio = models.DateField()
     periodo_ideal_fim = models.DateField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.nome
 
 class OrdemServico(models.Model):
-    talhao = models.ForeignKey(Talhao, on_delete=models.PROTECT)
+    talhao = models.ForeignKey('fazendas.Talhao', on_delete=models.PROTECT)
     cultura = models.ForeignKey(Cultura, on_delete=models.PROTECT)
     tipo = models.CharField(max_length=50, choices=[('preparo', 'Preparo'), ('plantio', 'Plantio'), ('pulverizacao', 'Pulverização'), ('colheita', 'Colheita')])
     data_inicio = models.DateField()
     data_fim = models.DateField(null=True, blank=True)
-    insumos_usados = models.ManyToManyField(Insumo, through='UsoInsumo')
+    insumos_usados = models.ManyToManyField('estoque.Insumo', through='UsoInsumo')
     aprovado = models.BooleanField(default=False)
     custo_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    planejada = models.BooleanField(default=False)  # Para ordens planejadas vs. realizadas
-    produtividade = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Para histórico (ex.: kg/ha)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    planejada = models.BooleanField(default=False)
+    produtividade = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def clean(self):
         if self.data_inicio < self.cultura.periodo_ideal_inicio or self.data_inicio > self.cultura.periodo_ideal_fim:
@@ -35,12 +33,19 @@ class OrdemServico(models.Model):
 
 class UsoInsumo(models.Model):
     ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
-    insumo = models.ForeignKey(Insumo, on_delete=models.PROTECT)
+    insumo = models.ForeignKey('estoque.Insumo', on_delete=models.PROTECT)
     quantidade = models.DecimalField(max_digits=8, decimal_places=2)
 
     def clean(self):
         if self.quantidade > self.insumo.quantidade:
             raise ValidationError('Quantidade de insumo insuficiente.')
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        if self.ordem_servico.aprovado:
+            self.insumo.quantidade -= self.quantidade
+            self.insumo.save()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.insumo} ({self.quantidade})"

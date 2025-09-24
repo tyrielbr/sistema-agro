@@ -1,12 +1,11 @@
 from django.db import models
-from agricola.models import OrdemServico
 from django.contrib.auth.models import User
 
 class CentroCusto(models.Model):
     nome = models.CharField(max_length=100)
-    ordens_associadas = models.ManyToManyField(OrdemServico)
+    ordens_associadas = models.ManyToManyField('agricola.OrdemServico')
     custo_rateado = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def calcular_rateio(self):
         total_area = sum(ordem.talhao.area for ordem in self.ordens_associadas.all() if ordem.talhao)
@@ -33,16 +32,16 @@ class Funcionario(models.Model):
     condicao = models.CharField(max_length=20, choices=CONDICAO_CHOICES)
     salario_registrado = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     salario_efetivo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    valor_hora_extra = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Sugestão: 50%
-    valor_diaria_extra = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Sugestão: 100%
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    valor_hora_extra = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    valor_diaria_extra = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        hora_normal = self.salario_efetivo / 220  # Assumindo 220h/mês
+        hora_normal = self.salario_efetivo / 220
         if not self.valor_hora_extra:
-            self.valor_hora_extra = hora_normal * 1.5  # 50% extra
+            self.valor_hora_extra = hora_normal * 1.5
         if not self.valor_diaria_extra:
-            self.valor_diaria_extra = self.salario_efetivo * 2  # 100% para domingos/feriados
+            self.valor_diaria_extra = self.salario_efetivo * 2
         super().save(*args, **kwargs)
 
     def __str__(self):

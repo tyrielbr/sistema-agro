@@ -8,7 +8,7 @@ from .forms import EquipamentoForm, AbastecimentoForm
 def dashboard(request):
     equipamentos = Equipamento.objects.filter(owner=request.user) if not request.user.is_superuser else Equipamento.objects.all()
     ordens = Manutencao.objects.filter(owner=request.user) if not request.user.is_superuser else Manutencao.objects.all()
-    alertas = []  # Simples: se horas > 500, alerta troca óleo
+    alertas = []
     for eq in equipamentos:
         if eq.horas_registradas > 500:
             alertas.append(f"Alerta: Troca de óleo para {eq.nome} (horas: {eq.horas_registradas})")
@@ -27,6 +27,8 @@ def cria_abastecimento(request):
             obj.save()
             messages.success(request, 'Abastecimento registrado.')
             return redirect('maquinas_dashboard')
+        else:
+            messages.error(request, 'Erro no formulário.')
     else:
         form = AbastecimentoForm()
     return render(request, 'maquinas/cria_abastecimento.html', {'form': form})
@@ -41,6 +43,8 @@ def cria_equipamento(request):
             obj.save()
             messages.success(request, 'Equipamento cadastrado.')
             return redirect('maquinas_dashboard')
+        else:
+            messages.error(request, 'Erro no formulário.')
     else:
         form = EquipamentoForm()
     return render(request, 'maquinas/cria_equipamento.html', {'form': form})

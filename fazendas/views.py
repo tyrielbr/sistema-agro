@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Fazenda, Talhao
 from .forms import FazendaForm, TalhaoForm
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def lista_fazendas(request):
