@@ -2,17 +2,57 @@
 {% block content %}
 <h1>Dashboard Financeiro</h1>
 <div class="row">
-    <div class="col-md-12">
-        <p>Fluxo de Caixa: R$ {{ fluxo }}</p>
-        <canvas id="fluxoChart" class="fade-in"></canvas>
-        <script>
-            var ctx = document.getElementById('fluxoChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: { labels: ['Fluxo'], datasets: [{ label: 'Fluxo', data: [{{ fluxo }}] }] }
-            });
-        </script>
+    <div class="col-md-4 mb-3">
+        <div class="card fade-in">
+            <div class="card-body">
+                <h2>Fluxo de Caixa</h2>
+                <p>Saldo: R$ {{ fluxo|floatformat:2 }}</p>
+                <canvas id="fluxoChart"></canvas>
+                <script>
+                    var ctx = document.getElementById('fluxoChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Entradas', 'Saídas', 'Saldo'],
+                            datasets: [{
+                                label: 'Fluxo',
+                                data: [{{ entradas|default:0 }}, {{ saidas|default:0 }}, {{ fluxo|default:0 }}],
+                                borderColor: 'var(--secondary-green)',
+                                fill: false
+                            }]
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card fade-in">
+            <div class="card-body">
+                <h2>Vencimentos Pendentes</h2>
+                <p>Total: {{ vencimentos_pendentes.count }}</p>
+                <table class="table">
+                    <thead><tr><th>Data</th><th>Valor</th></tr></thead>
+                    <tbody>
+                        {% for v in vencimentos_pendentes %}
+                        <tr><td>{{ v.data_vencimento }}</td><td>R$ {{ v.valor }}</td></tr>
+                        {% empty %}
+                        <tr><td colspan="2">Nenhum vencimento pendente.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card fade-in">
+            <div class="card-body">
+                <h2>Ações Rápidas</h2>
+                <a href="{% url 'vencimentos' %}" class="btn btn-primary">Ver Vencimentos</a>
+                <a href="{% url 'cria_contrato' %}" class="btn btn-success">Criar Contrato</a>
+                <a href="{% url 'cria_financiamento' %}" class="btn btn-success">Criar Financiamento</a>
+            </div>
+        </div>
     </div>
 </div>
-<a href="{% url 'vencimentos' %}" class="btn btn-primary">Ver Vencimentos</a>
 {% endblock %}

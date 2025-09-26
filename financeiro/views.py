@@ -9,12 +9,25 @@ from django.db.models import Sum
 
 @login_required
 def dashboard(request):
-    entradas = Vencimento.objects.filter(conta__balance_type='credit', quitado=True, owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(conta__balance_type='credit', quitado=True).aggregate(total=Sum('valor'))['total'] or 0
-    saidas = Vencimento.objects.filter(conta__balance_type='debit', quitado=True, owner=request.user).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(conta__balance_type='debit', quitado=True).aggregate(total=Sum('valor'))['total'] or 0
+    entradas = Vencimento.objects.filter(
+        conta__account__balance_type='credit', quitado=True, owner=request.user
+    ).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(
+        conta__account__balance_type='credit', quitado=True
+    ).aggregate(total=Sum('valor'))['total'] or 0
+    saidas = Vencimento.objects.filter(
+        conta__account__balance_type='debit', quitado=True, owner=request.user
+    ).aggregate(total=Sum('valor'))['total'] or 0 if not request.user.is_superuser else Vencimento.objects.filter(
+        conta__account__balance_type='debit', quitado=True
+    ).aggregate(total=Sum('valor'))['total'] or 0
     fluxo = entradas - saidas
-    context = {'fluxo': fluxo}
+    vencimentos_pendentes = Vencimento.objects.filter(
+        quitado=False, data_vencimento__gte=date.today(), owner=request.user
+    ) if not request.user.is_superuser else Vencimento.objects.filter(
+        quitado=False, data_vencimento__gte=date.today()
+    )
+    context = {'entradas': entradas, 'saidas': saidas, 'fluxo': fluxo, 'vencimentos_pendentes': vencimentos_pendentes}
     return render(request, 'financeiro/dashboard.html', context)
-
+    
 @login_required
 def vencimentos(request):
     periodo = request.GET.get('periodo', 'diario')

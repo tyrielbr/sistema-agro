@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import CentroCusto, Funcionario
 from .forms import FuncionarioForm
 from maquinas.models import Manutencao
+from django.db import models  # Adicionado para models.Sum
 
 @login_required
 def dashboard(request):

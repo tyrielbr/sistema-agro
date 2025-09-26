@@ -5,6 +5,20 @@ from .models import Fazenda, Talhao
 from .forms import FazendaForm, TalhaoForm
 from django.conf import settings
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Fazenda, Talhao
+from .forms import FazendaForm, TalhaoForm
+from django.conf import settings
+
+@login_required
+def dashboard(request):
+    fazendas = Fazenda.objects.filter(owner=request.user) if not request.user.is_superuser else Fazenda.objects.all()
+    talhoes_count = Talhao.objects.filter(owner=request.user).count() if not request.user.is_superuser else Talhao.objects.count()
+    context = {'fazendas': fazendas, 'talhoes_count': talhoes_count}
+    return render(request, 'fazendas/dashboard.html', context)
+    
 @login_required
 def lista_fazendas(request):
     fazendas = Fazenda.objects.filter(owner=request.user) if not request.user.is_superuser else Fazenda.objects.all()
