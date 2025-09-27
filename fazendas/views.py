@@ -4,13 +4,18 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from .models import Pessoa, Fazenda, Arrendamento, Area, Talhao
 from .forms import PessoaForm, FazendaForm, ArrendamentoForm, AreaForm, TalhaoForm
-from django.db import models
 
 @login_required
 def dashboard(request):
-    context = {}
+    fazendas = Fazenda.objects.filter(owner=request.user)
+    arrendamentos = Arrendamento.objects.filter(owner=request.user)
+    context = {
+        'fazendas': fazendas,
+        'arrendamentos': arrendamentos
+    }
     return render(request, 'fazendas/dashboard.html', context)
 
 @login_required
@@ -23,6 +28,8 @@ def cria_pessoa(request):
             pessoa.save()
             messages.success(request, 'Proprietário/Sócio cadastrado com sucesso.')
             return redirect('fazendas_dashboard')
+        else:
+            messages.error(request, 'Erro ao cadastrar proprietário/sócio. Verifique os dados.')
     else:
         form = PessoaForm()
     return render(request, 'fazendas/cria_pessoa.html', {'form': form})
@@ -73,6 +80,8 @@ def cria_fazenda(request):
             form.save_m2m()
             messages.success(request, 'Fazenda cadastrada com sucesso.')
             return redirect('fazendas_dashboard')
+        else:
+            messages.error(request, 'Erro ao cadastrar fazenda. Verifique os dados.')
     else:
         form = FazendaForm()
     return render(request, 'fazendas/cria_fazenda.html', {'form': form})
@@ -120,7 +129,7 @@ def cria_arrendamento(request):
             arrendamento = form.save(commit=False)
             arrendamento.owner = request.user
             arrendamento.save()
-            form.save_m2m()  # Salva a relação ManyToMany após o objeto ser salvo
+            form.save_m2m()
             messages.success(request, 'Arrendamento cadastrado com sucesso.')
             return redirect('fazendas_dashboard')
         else:
@@ -128,7 +137,7 @@ def cria_arrendamento(request):
     else:
         form = ArrendamentoForm()
     return render(request, 'fazendas/cria_arrendamento.html', {'form': form})
-      
+
 class ArrendamentoUpdateView(UpdateView):
     model = Arrendamento
     form_class = ArrendamentoForm
@@ -171,6 +180,8 @@ def cria_area(request):
             area.save()
             messages.success(request, 'Área cadastrada com sucesso.')
             return redirect('fazendas_dashboard')
+        else:
+            messages.error(request, 'Erro ao cadastrar área. Verifique os dados.')
     else:
         form = AreaForm()
     return render(request, 'fazendas/cria_area.html', {'form': form})
@@ -209,16 +220,19 @@ class AreaDeleteView(DeleteView):
 
 @login_required
 def cria_talhao(request):
+    area_id = request.GET.get('area_id')
     if request.method == 'POST':
-        form = TalhaoForm(request.POST, request.FILES)
+        form = TalhaoForm(request.POST, request.FILES, area_id=area_id)
         if form.is_valid():
             talhao = form.save(commit=False)
             talhao.owner = request.user
             talhao.save()
             messages.success(request, 'Talhão cadastrado com sucesso.')
             return redirect('fazendas_dashboard')
+        else:
+            messages.error(request, 'Erro ao cadastrar talhão. Verifique os dados.')
     else:
-        form = TalhaoForm()
+        form = TalhaoForm(area_id=area_id)
     return render(request, 'fazendas/cria_talhao.html', {'form': form})
 
 class TalhaoUpdateView(UpdateView):
