@@ -16,7 +16,13 @@ class CentroCusto(models.Model):
 
     def __str__(self):
         return self.nome
+        
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    cpf_cnpj = models.CharField(max_length=18)  # Supports CPF (11) or CNPJ (14)
 
+    def __str__(self):
+        return f"{self.user.username} - {self.cpf_cnpj}"
 class Funcionario(models.Model):
     CONDICAO_CHOICES = [
         ('diarista', 'Diarista'),
