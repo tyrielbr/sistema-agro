@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Sum
 from .models import OrdemServico, Cultura, Lavoura
-from .forms import OrdemServicoForm, LavouraForm, CulturaForm
+from .forms import OrdemServicoForm, LavouraForm, CulturaForm, UsoInsumoFormSet
 
 @login_required
 def dashboard(request):
@@ -52,18 +52,22 @@ def lista_ordens(request):
 @login_required
 def cria_ordem(request):
     if request.method == 'POST':
-        form = OrdemServicoForm(request.POST)
-        if form.is_valid():
+        form = OrdemServicoForm(request.POST, request.FILES)
+        formset = UsoInsumoFormSet(request.POST, instance=OrdemServico())
+        if form.is_valid() and formset.is_valid():
             ordem = form.save(commit=False)
             ordem.owner = request.user
             ordem.save()
+            formset.instance = ordem
+            formset.save()
             messages.success(request, 'Ordem criada com sucesso.')
             return redirect('lista_ordens')
         else:
             messages.error(request, 'Erro ao criar ordem.')
     else:
         form = OrdemServicoForm()
-    return render(request, 'agricola/cria_ordem.html', {'form': form})
+        formset = UsoInsumoFormSet(instance=OrdemServico())
+    return render(request, 'agricola/cria_ordem.html', {'form': form, 'formset': formset})
 
 @login_required
 def aprova_ordem(request, ordem_id):

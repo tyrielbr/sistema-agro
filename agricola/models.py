@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from datetime import date
 
 class Cultura(models.Model):
     nome = models.CharField(max_length=50)
@@ -57,7 +58,10 @@ class Lavoura(models.Model):
             raise ValidationError('Data fora do período ideal da cultura.')
 
 class OrdemServico(models.Model):
-    talhao = models.ForeignKey('fazendas.Talhao', on_delete=models.PROTECT)
+    titulo = models.CharField(max_length=100, blank=True)
+    observacoes = models.TextField(blank=True)
+    anexo = models.FileField(upload_to='anexos/', null=True, blank=True)
+    talhao = models.ManyToManyField('fazendas.Talhao')  # Mudança pra múltiplos talhões
     cultura = models.ForeignKey(Cultura, on_delete=models.PROTECT)
     tipo = models.CharField(max_length=50, choices=[
         ('preparo', 'Preparo'),
@@ -69,7 +73,7 @@ class OrdemServico(models.Model):
     ])
     data_inicio = models.DateField()
     data_fim = models.DateField(null=True, blank=True)
-    insumos_usados = models.ManyToManyField('estoque.Insumo', through='UsoInsumo')
+    insumos_usados = models.ManyToManyField('estoque.Insumo', through='UsoInsumo', blank=True)
     aprovado = models.BooleanField(default=False)
     custo_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     planejada = models.BooleanField(default=False)
@@ -89,18 +93,23 @@ class OrdemServico(models.Model):
 class UsoInsumo(models.Model):
     ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
     insumo = models.ForeignKey('estoque.Insumo', on_delete=models.PROTECT)
-    quantidade = models.DecimalField(max_digits=8, decimal_places=2)
-    receita_por_ha = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True, help_text="Receita por hectare (ex: 200 ml/ha)")  # Novo
-    unidade_medida = models.CharField(max_length=20, choices=[('ml/ha', 'ml/ha'), ('kg/ha', 'kg/ha'), ('l/ha', 'l/ha'), ('g/ha', 'g/ha')], null=True, blank=True)  # Novo
+    quantidade = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    receita_por_ha = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True, help_text="Receita por hectare (ex: 200 ml/ha)")
+    unidade_medida = models.CharField(max_length=20, choices=[
+        ('ml/ha', 'ml/ha'),
+        ('kg/ha', 'kg/ha'),
+        ('l/ha', 'l/ha'),
+        ('g/ha', 'g/ha')
+    ], null=True, blank=True)
 
     def clean(self):
+        area_total = sum(talhao.area for talhao in self.ordem_servico.talhao.all()) if self.ordem_servico.talhao.all() else 0
+        if self.receita_por_ha and area_total:
+            self.quantidade = self.receita_por_ha * area_total
         if self.quantidade and self.quantidade > self.insumo.quantidade:
             raise ValidationError('Quantidade de insumo insuficiente.')
-        if self.ordem_servico.tipo == 'fertirrigacao' and not self.insumo.categoria == 'fertilizante':
-            raise ValidationError('Insuficiente para fertirrigação deve ser fertilizante.')
-        # Cálculo opcional
-        if self.receita_por_ha and self.ordem_servico.talhao and self.ordem_servico.talhao.area:
-            self.quantidade = self.receita_por_ha * self.ordem_servico.talhao.area
+        if self.ordem_servico.tipo == 'fertirrigacao' and self.insumo.categoria != 'fertilizante':
+            raise ValidationError('Insumo para fertirrigação deve ser fertilizante.')
 
     def save(self, *args, **kwargs):
         self.clean()
