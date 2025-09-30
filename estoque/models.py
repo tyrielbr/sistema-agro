@@ -1,6 +1,18 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from fiscal.models import NfRecebida
+
+class EstoqueMovimento(models.Model):
+    produto = models.CharField(max_length=100)
+    quantidade = models.DecimalField(max_digits=10, decimal_places=3)
+    tipo = models.CharField(max_length=20, choices=[('entrada', 'Entrada'), ('saida', 'Saída')])
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    nf_recebida = models.ForeignKey(NfRecebida, on_delete=models.SET_NULL, null=True, blank=True)
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.produto} - {self.quantidade} {self.tipo}"
 
 class Silo(models.Model):
     nome = models.CharField(max_length=100)
@@ -39,3 +51,4 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+

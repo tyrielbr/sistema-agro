@@ -16,13 +16,23 @@
             <a href="{% url 'home' %}" class="navbar-brand">Sistema Agropecuário</a>
             <ul class="nav">
                 <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                <li><a href="{% url 'lista_fazendas' %}" class="nav-link">Fazendas</a></li>
+                <li><a href="{% url 'fazendas_dashboard' %}" class="nav-link">Fazendas</a></li>  <!-- Atualizado para 'fazendas_dashboard' -->
                 <li><a href="{% url 'agricola_dashboard' %}" class="nav-link">Agrícola</a></li>
                 <li><a href="{% url 'estoque_dashboard' %}" class="nav-link">Estoque</a></li>
                 <li><a href="{% url 'administrativo_dashboard' %}" class="nav-link">Administrativo</a></li>
                 <li><a href="{% url 'maquinas_dashboard' %}" class="nav-link">Máquinas</a></li>
                 <li><a href="{% url 'financeiro_dashboard' %}" class="nav-link">Financeiro</a></li>
-                <li><a href="{% url 'comercial_dashboard' %}" class="nav-link">Comercial</a></li>
+                
+                <li><a class="nav-link dropdown-toggle" href="#" id="comercialDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Comercial
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="comercialDropdown">
+                            <li><a href="{% url 'comercial_dashboard' %}" class="dropdown-item">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fiscal_dashboard' %}">NF-e Recebidas</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fiscal_historico' %}">Histórico de Lançamentos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'atualizar_notas' %}">Atualizar Notas</a></li>
+                        </ul>
+                </li>
                 {% if user.is_superuser %}
                 <li><a href="{% url 'dashboard_master' %}" class="nav-link">Master</a></li>
                 {% endif %}
@@ -38,6 +48,8 @@
     <main class="container py-4">
         {% block content %}{% endblock %}
     </main>
+    
+    
     <footer class="bg-brown text-white text-center py-2">
         <p>&copy; 2025 Sistema Agropecuário. Todos os direitos reservados.</p>
     </footer>
@@ -45,3 +57,4 @@
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
+

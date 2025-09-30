@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Gerenciar Culturas{% endblock %}
+{% block content %}
+  <div class="container mt-4">
+    <h2>Gerenciar Culturas</h2>
+    {% if messages %}
+      {% for message in message %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <h3>Criar Nova Cultura</h3>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_nome">Nome:</label>
+        {{ form.nome }}
+      </div>
+      <div class="form-group">
+        <label for="id_periodo_ideal_inicio">Período Ideal Início:</label>
+        {{ form.periodo_ideal_inicio }}
+      </div>
+      <!-- Adicione div form-group pra cada campo, incluindo os múltiplos (fazendas, areas, talhoes) -->
+      <div class="form-group">
+        <label for="id_fazendas">Fazendas:</label>
+        {{ form.fazendas }}
+      </div>
+      <div class="form-group">
+        <label for="id_areas">Áreas:</label>
+        {{ form.areas }}
+      </div>
+      <div class="form-group">
+        <label for="id_talhoes">Talhões:</label>
+        {{ form.talhoes }}
+      </div>
+      <!-- Resto dos campos similares -->
+      <button type="submit" class="btn btn-warning">Salvar</button>
+    </form>
+    <h3>Culturas Existentes</h3>
+    <table class="table table-bordered">
+      <!-- Tabela como antes, com th e td alinhados -->
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Ciclo (min-max)</th>
+          <th>Classificação</th>
+          <th>Necessidade Hídrica</th>
+          <th>Observações</th>
+          <th>Fazendas</th>
+          <th>Áreas</th>
+          <th>Talhões</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cultura in culturas %}
+          <tr>
+            <td>{{ cultura.nome }}</td>
+            <td>{{ cultura.ciclo_min|default:"-" }} - {{ cultura.ciclo_max|default:"-" }} dias</td>
+            <td>{{ cultura.classificacao|title|default:"-" }}</td>
+            <td>{{ cultura.necessidade_hidrica|default:"-" }} mm</td>
+            <td>{{ cultura.observacoes|default:"-" }}</td>
+            <td>{{ cultura.fazendas.all|join:", " }}</td>
+            <td>{{ cultura.areas.all|join:", " }}</td>
+            <td>{{ cultura.talhoes.all|join:", " }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="8">Nenhuma cultura cadastrada.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

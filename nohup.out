@@ -1,0 +1,166 @@
+ 
+ -------------- celery@DESKTOP-S2ACPAJ v5.5.3 (immunity)
+--- ***** ----- 
+-- ******* ---- Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39 2025-09-27 19:55:03
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         sistema_agropecuario:0x70d74b9c0dd0
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     redis://localhost:6379/0
+- *** --- * --- .> concurrency: 8 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . fiscal.tasks.download_nf_diaria
+
+[2025-09-27 19:55:04,095: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2025-09-27 19:55:04,099: INFO/MainProcess] mingle: searching for neighbors
+[2025-09-27 19:55:05,109: INFO/MainProcess] mingle: all alone
+[2025-09-27 19:55:05,122: INFO/MainProcess] celery@DESKTOP-S2ACPAJ ready.
+ 
+ -------------- celery@DESKTOP-S2ACPAJ v5.5.3 (immunity)
+--- ***** ----- 
+-- ******* ---- Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39 2025-09-27 19:55:46
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         sistema_agropecuario:0x7c9f357b81a0
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     redis://localhost:6379/0
+- *** --- * --- .> concurrency: 8 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . fiscal.tasks.download_nf_diaria
+
+[2025-09-27 19:55:46,789: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2025-09-27 19:55:46,794: INFO/MainProcess] mingle: searching for neighbors
+[2025-09-27 19:55:47,806: INFO/MainProcess] mingle: all alone
+[2025-09-27 19:55:47,814: INFO/MainProcess] celery@DESKTOP-S2ACPAJ ready.
+[2025-09-27 20:21:56,075: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[06e1c586-2ad3-4f58-a8ad-170caed97b7c] received
+[2025-09-27 20:21:56,132: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[06e1c586-2ad3-4f58-a8ad-170caed97b7c] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 20:22:00,340: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[91fd0c97-98fa-41b9-a310-2bb4d23df9fa] received
+[2025-09-27 20:22:00,386: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[91fd0c97-98fa-41b9-a310-2bb4d23df9fa] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 20:22:44,013: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[68e6709c-5166-42b6-9ddc-6115a9a6145e] received
+[2025-09-27 20:22:44,035: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[68e6709c-5166-42b6-9ddc-6115a9a6145e] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 20:27:07,469: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[94cf55c4-7eba-40f8-9098-d25fd9f4509a] received
+[2025-09-27 20:27:07,488: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[94cf55c4-7eba-40f8-9098-d25fd9f4509a] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 20:29:05,371: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[eb6c831b-8c2e-4d56-9777-dd5a133e517d] received
+[2025-09-27 20:29:05,386: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[eb6c831b-8c2e-4d56-9777-dd5a133e517d] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 21:31:43,918: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[73a38988-b051-4019-a67a-71f56aa5d275] received
+[2025-09-27 21:31:43,961: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[73a38988-b051-4019-a67a-71f56aa5d275] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 21:31:58,859: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[10b5adbd-a5a4-4ca9-b74b-1bb4b42598e3] received
+[2025-09-27 21:31:58,879: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[10b5adbd-a5a4-4ca9-b74b-1bb4b42598e3] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.
+[2025-09-27 21:48:49,094: INFO/MainProcess] Task fiscal.tasks.download_nf_diaria[1d45f37f-1c36-4a15-8161-db0cc76601cc] received
+[2025-09-27 21:48:49,112: ERROR/ForkPoolWorker-8] Task fiscal.tasks.download_nf_diaria[1d45f37f-1c36-4a15-8161-db0cc76601cc] raised unexpected: ValueError('Certificado A1 não encontrado no path especificado.')
+Traceback (most recent call last):
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/tasks.py", line 9, in download_nf_diaria
+    key, cert = load_certificate()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/felip/sistema-agropecuario/fiscal/utils.py", line 11, in load_certificate
+    raise ValueError("Certificado A1 não encontrado no path especificado.")
+ValueError: Certificado A1 não encontrado no path especificado.

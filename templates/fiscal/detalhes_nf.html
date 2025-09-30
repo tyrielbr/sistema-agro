@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Detalhes NF-e {{ nf.chave_nfe }}</h1>
+<p>Data Emissão: {{ nf.data_emissao }}</p>
+<p>Emitente: {{ nf.emitente_cnpj }}</p>
+<p>Valor Total: R$ {{ nf.valor_total }}</p>
+<h2>Itens</h2>
+<table class="table">
+    <thead><tr><th>Produto</th><th>NCM</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr></thead>
+    <tbody>
+        {% for item in itens %}
+        <tr><td>{{ item.produto }}</td><td>{{ item.ncm }}</td><td>{{ item.quantidade }}</td><td>R$ {{ item.valor_unitario }}</td><td>R$ {{ item.total_item }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h2>Ações</h2>
+<form method="post" class="fade-in">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Confirmar Ação</button>
+</form>
+<a href="{% url 'fiscal_dashboard' %}" class="btn btn-secondary">Voltar</a>
+{% endblock %}

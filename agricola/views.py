@@ -2,16 +2,26 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Sum
-from .models import OrdemServico, Cultura
-from .forms import OrdemServicoForm
+from .models import OrdemServico, Cultura, Lavoura
+from .forms import OrdemServicoForm, LavouraForm, CulturaForm
 
 @login_required
 def dashboard(request):
-    ordens_ultimas = OrdemServico.objects.filter(owner=request.user).order_by('-data_inicio')[:5] if not request.user.is_superuser else OrdemServico.objects.order_by('-data_inicio')[:5]
-    ordens_planejadas = OrdemServico.objects.filter(planejada=True, owner=request.user) if not request.user.is_superuser else OrdemServico.objects.filter(planejada=True)
-    lavouras_ativas = Cultura.objects.filter(owner=request.user) if not request.user.is_superuser else Cultura.objects.all()
-    produtividade_media = OrdemServico.objects.filter(owner=request.user).aggregate(avg=Avg('produtividade'))['avg'] or 0 if not request.user.is_superuser else OrdemServico.objects.aggregate(avg=Avg('produtividade'))['avg'] or 0
-    context = {'ordens_ultimas': ordens_ultimas, 'ordens_planejadas': ordens_planejadas, 'lavouras_ativas': lavouras_ativas, 'produtividade_media': produtividade_media}
+    user_filter = {'owner': request.user} if not request.user.is_superuser else {}
+    
+    ordens_ultimas = OrdemServico.objects.filter(**user_filter).order_by('-data_inicio')[:5]
+    ordens_planejadas = OrdemServico.objects.filter(planejada=True, **user_filter)
+    lavouras_ativas = Lavoura.objects.filter(owner=request.user) if not request.user.is_superuser else Lavoura.objects.all()
+    produtividade_media = OrdemServico.objects.filter(**user_filter).aggregate(avg=Avg('produtividade'))['avg'] or 0
+    ordens_pendentes = OrdemServico.objects.filter(aprovado=False, data_fim__isnull=True, **user_filter)
+
+    context = {
+        'ordens_ultimas': ordens_ultimas,
+        'ordens_planejadas': ordens_planejadas,
+        'lavouras_ativas': lavouras_ativas,
+        'produtividade_media': produtividade_media,
+        'ordens_pendentes': ordens_pendentes,
+    }
     return render(request, 'agricola/dashboard.html', context)
 
 @login_required
@@ -26,7 +36,7 @@ def ordens_planejadas(request):
 
 @login_required
 def lavouras_ativas(request):
-    lavouras = Cultura.objects.filter(owner=request.user) if not request.user.is_superuser else Cultura.objects.all()
+    lavouras = Lavoura.objects.filter(owner=request.user) if not request.user.is_superuser else Lavoura.objects.all()
     return render(request, 'agricola/lavouras_ativas.html', {'lavouras': lavouras})
 
 @login_required
@@ -64,3 +74,45 @@ def aprova_ordem(request, ordem_id):
         messages.success(request, 'Ordem aprovada.')
         return redirect('lista_ordens')
     return render(request, 'agricola/aprova_ordem.html', {'ordem': ordem})
+
+@login_required
+def cria_lavoura(request):
+    if request.method == 'POST':
+        form = LavouraForm(request.POST)
+        if form.is_valid():
+            lavoura = form.save(commit=False)
+            lavoura.owner = request.user
+            lavoura.save()
+            messages.success(request, 'Lavoura criada com sucesso!')
+            return redirect('lista_lavouras')
+        else:
+            messages.error(request, 'Erro ao criar lavoura: ' + str(form.errors))
+    else:
+        form = LavouraForm()
+    return render(request, 'agricola/cria_lavoura.html', {'form': form})
+    
+def lista_lavouras(request):
+    lavouras = Lavoura.objects.filter(ativo=True)
+    return render(request, 'agricola/lista_lavouras.html', {'lavouras': lavouras})
+
+def remove_lavoura(request, lavoura_id):
+    lavoura = get_object_or_404(Lavoura, id=lavoura_id)
+    if request.method == 'POST':
+        lavoura.ativo = False  # Soft delete
+        lavoura.save()
+        messages.success(request, 'Lavoura removida com sucesso!')
+        return redirect('lista_lavouras')
+    return render(request, 'agricola/remove_lavoura.html', {'lavoura': lavoura})
+
+@login_required
+def gerenciar_culturas(request):
+    if request.method == 'POST':
+        form = CulturaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cultura criada com sucesso!')
+            return redirect('gerenciar_culturas')
+    else:
+        form = CulturaForm()
+    culturas = Cultura.objects.all()
+    return render(request, 'agricola/gerenciar_culturas.html', {'form': form, 'culturas': culturas})

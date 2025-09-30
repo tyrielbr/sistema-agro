@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Propriedades Cadastradas</h1>
+<h2>Fazendas</h2>
+<table class="table fade-in">
+    <thead><tr><th>Nome</th><th>Localização</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for fazenda in fazendas %}
+        <tr>
+            <td>{{ fazenda.nome }}</td>
+            <td>{{ fazenda.localizacao }}</td>
+            <td>
+                <a href="{% url 'edita_fazenda' fazenda.pk %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'deleta_fazenda' fazenda.pk %}" class="btn btn-danger">Deletar</a>
+                <a href="{% url 'detalhes_propriedade' 'fazenda' fazenda.id %}" class="btn btn-info">Detalhes</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">Nenhuma fazenda cadastrada.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Arrendamentos</h2>
+<table class="table fade-in">
+    <thead><tr><th>Nome</th><th>Localização</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for arrendamento in arrendamentos %}
+        <tr>
+            <td>{{ arrendamento.nome }}</td>
+            <td>{{ arrendamento.localizacao }}</td>
+            <td>
+                <a href="{% url 'edita_arrendamento' arrendamento.pk %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'deleta_arrendamento' arrendamento.pk %}" class="btn btn-danger">Deletar</a>
+                <a href="{% url 'detalhes_propriedade' 'arrendamento' arrendamento.id %}" class="btn btn-info">Detalhes</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">Nenhum arrendamento cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

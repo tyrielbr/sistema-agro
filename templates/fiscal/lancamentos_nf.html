@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Lançamento NF-e {{ nf.chave_nfe }}</h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" href="#estoque" data-bs-toggle="tab">Estoque</a></li>
+    <li class="nav-item"><a class="nav-link" href="#financeiro" data-bs-toggle="tab">Financeiro</a></li>
+    <li class="nav-item"><a class="nav-link" href="#resumo" data-bs-toggle="tab">Resumo</a></li>
+</ul>
+<div class="tab-content">
+    <div id="estoque" class="tab-pane active">
+        <h2>Estoque</h2>
+        <table class="table">
+            <thead><tr><th>Produto</th><th>Quantidade</th><th>Lote</th><th>Ações</th></tr></thead>
+            <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>{{ item.produto }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.lote|default:"" }}</td>
+                    <td><button class="btn btn-sm btn-primary">Editar</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="financeiro" class="tab-pane">
+        <h2>Financeiro</h2>
+        <p>Valor Total: R$ {{ nf.valor_total }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Campos para parcelas -->
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+    <div id="resumo" class="tab-pane">
+        <h2>Resumo</h2>
+        <p>Estoque: R$ X | Financeiro: R$ Y | Diferença: R$ Z</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Gravar e Processar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

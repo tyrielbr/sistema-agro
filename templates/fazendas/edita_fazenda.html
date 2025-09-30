@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Editar Fazenda</h1>
+<form method="post" class="fade-in">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Salvar Alterações</button>
+    <a href="{% url 'fazendas_dashboard' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

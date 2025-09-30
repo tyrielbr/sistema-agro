@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Detalhes da Propriedade: {{ propriedade.nome }}</h1>
+    <p><strong>Localização:</strong> {{ propriedade.localizacao }}</p>
+    <p><strong>Área Total:</strong> {{ propriedade.area_total }} ha</p>
+    <h2>Áreas Associadas</h2>
+    <table class="table fade-in">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Área (ha)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for area in areas %}
+                <tr>
+                    <td>{{ area.nome }}</td>
+                    <td>{{ area.area }}</td>
+                    <td>
+                        <a href="{% url 'edita_area' area.pk %}" class="btn btn-primary">Editar</a>
+                        <a href="{% url 'deleta_area' area.pk %}" class="btn btn-danger">Deletar</a>
+                        <a href="{% url 'detalhes_area' area.id %}" class="btn btn-info">Detalhes</a>
+                        {% if propriedade.fazenda %} <!-- Only show for fazendas -->
+                            <a href="{% url 'cria_talhao' %}?area_id={{ area.id }}" class="btn btn-success">Criar Talhão</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Nenhuma área associada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'cria_area' %}" class="btn btn-success">Cadastrar Área</a>
+    <a href="{% url 'fazendas_dashboard' %}" class="btn btn-secondary">Voltar</a>
+</div>
+{% endblock %}

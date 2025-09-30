@@ -1,9 +1,48 @@
 {% extends 'base.html' %}
+{% block title %}Criar Ordem de Serviço{% endblock %}
 {% block content %}
-<h1>Criar Ordem de Serviço</h1>
-<form method="post" class="fade-in">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Salvar</button>
-</form>
+  <div class="container mt-4">
+    <h2>Criar Nova Ordem de Serviço</h2>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_titulo">Título:</label>
+        {{ form.titulo }}
+      </div>
+      <div class="form-group">
+        <label for="id_observacoes">Observações:</label>
+        {{ form.observacoes }}
+      </div>
+      <div class="form-group">
+        <label for="id_talhao">Talhão:</label>
+        {{ form.talhao }}
+      </div>
+      <div class="form-group">
+        <label for="id_cultura">Cultura:</label>
+        {{ form.cultura }}
+      </div>
+      <div class="form-group">
+        <label for="id_tipo">Tipo:</label>
+        {{ form.tipo }}
+      </div>
+      <div class="form-group">
+        <label for="id_data_inicio">Data Início:</label>
+        {{ form.data_inicio }}
+      </div>
+      <div class="form-group">
+        <label for="id_data_fim">Data Fim:</label>
+        {{ form.data_fim }}
+      </div>
+      <div class="form-group">
+        <label for="id_volume_agua">Volume de Água (m³):</label>
+        {{ form.volume_agua }}
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
 {% endblock %}

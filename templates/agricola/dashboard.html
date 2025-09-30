@@ -1,28 +1,47 @@
 {% extends 'base.html' %}
+{% block title %}Dashboard Agrícola{% endblock %}
 {% block content %}
-<h1>Dashboard Agrícola</h1>
-<div class="row">
-    <div class="col-md-6">
-        <h2>Últimas Atividades</h2>
-        <table class="table fade-in">
-            <thead><tr><th>Data</th><th>Tipo</th></tr></thead>
-            <tbody>
-                {% for ordem in ordens_ultimas %}
-                <tr><td>{{ ordem.data_inicio }}</td><td>{{ ordem.tipo }}</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+  <div class="container mt-4">
+    <h2>Dashboard Agrícola</h2>
+    <BR></BR>
+    <div class="row justify-content-center">
+      <div class="col-md-3 mb-3">
+        <div class="card border rounded">
+          <div class="card-body">
+            <h5 class="card-title">Ordens Pendentes</h5>
+            <p class="card-text">{{ ordens_pendentes.count }} ordens</p>
+            <a href="{% url 'lista_ordens' %}" class="btn btn-warning btn-block">Ver Todas</a>
+            <a href="{% url 'cria_ordem' %}" class="btn btn-success btn-block">Criar Nova</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card border rounded">
+          <div class="card-body">
+            <h5 class="card-title">Lavouras Ativas</h5>
+            <p class="card-text">{{ lavouras_ativas.count }} lavouras</p>
+            <a href="{% url 'lista_lavouras' %}" class="btn btn-info btn-block">Gerenciar Lavouras</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card border rounded">
+          <div class="card-body">
+            <h5 class="card-title">Produtividade</h5>
+            <p class="card-text">Histórico disponível</p>
+            <a href="{% url 'historico_produtividade' %}" class="btn btn-warning btn-block">Ver Histórico</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card border rounded">
+          <div class="card-body">
+            <h5 class="card-title">Gerenciar Culturas</h5>
+            <p class="card-text">Adicione ou edite tipos de culturas</p>
+            <a href="{% url 'gerenciar_culturas' %}" class="btn btn-primary btn-block">Acessar</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-        <h2>Lavouras Ativas</h2>
-        <canvas id="lavourasChart" class="fade-in"></canvas>
-        <script>
-            var ctx = document.getElementById('lavourasChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: { labels: ['Produtividade Média'], datasets: [{ label: 'kg/ha', data: [{{ produtividade_media }}] }] }
-            });
-        </script>
-    </div>
-</div>
+  </div>
 {% endblock %}

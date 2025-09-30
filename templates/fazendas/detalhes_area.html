@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Detalhes da Área: {{ area.nome }}</h1>
+<p>Área: {{ area.area }} ha</p>
+<p>Latitude: {{ area.latitude }}</p>
+<p>Longitude: {{ area.longitude }}</p>
+{% if area.kmz_file %}
+<a href="{{ area.kmz_file.url }}" class="btn btn-primary">Baixar Arquivo KMZ</a>
+{% endif %}
+<h2>Talhões Associados</h2>
+<table class="table fade-in">
+    <thead><tr><th>Nome</th><th>Área (ha)</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for talhao in talhoes %}
+        <tr>
+            <td>{{ talhao.nome }}</td>
+            <td>{{ talhao.area_size }}</td>
+            <td>
+                <a href="{% url 'edita_talhao' talhao.pk %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'deleta_talhao' talhao.pk %}" class="btn btn-danger">Deletar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">Nenhum talhão associado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'cria_talhao' %}" class="btn btn-success">Cadastrar Talhão</a>
+{% endblock %}

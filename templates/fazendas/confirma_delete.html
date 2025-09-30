@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Confirmar Exclusão</h1>
+<p>Você tem certeza que deseja deletar "{{ object }}"?</p>
+<form method="post" class="fade-in">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Deletar</button>
+    <a href="{% url 'fazendas_dashboard' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

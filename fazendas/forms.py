@@ -54,3 +54,9 @@ class TalhaoForm(forms.ModelForm):
     class Meta:
         model = Talhao
         fields = ['nome', 'area', 'area_size', 'latitude', 'longitude', 'kmz_file']
+    def __init__(self, *args, area_id=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if area_id is not None:
+            self.fields['fazenda'].queryset = self.fields['fazenda'].queryset.filter(area__id=area_id)
+            # Ou seta um valor inicial, se for um campo direto
+            # self.initial['fazenda'] = area_id  # Descomenta se fazenda for o campo certo

@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import dashboard, lista_ordens, cria_ordem, aprova_ordem, ordens_realizadas, ordens_planejadas, lavouras_ativas, historico_produtividade
+from .views import dashboard, lista_ordens, cria_ordem, aprova_ordem, ordens_realizadas, ordens_planejadas, lavouras_ativas, historico_produtividade, cria_lavoura, lista_lavouras, remove_lavoura, gerenciar_culturas
 
 urlpatterns = [
     path('', dashboard, name='agricola_dashboard'),
@@ -26,4 +26,10 @@ urlpatterns = [
     path('ordens/planejadas/', ordens_planejadas, name='ordens_planejadas'),
     path('lavouras/ativas/', lavouras_ativas, name='lavouras_ativas'),
     path('produtividade/historico/', historico_produtividade, name='historico_produtividade'),
+    path('lavouras/criar/', cria_lavoura, name='cria_lavoura'),
+    path('lavouras/', lista_lavouras, name='lista_lavouras'),
+    path('lavouras/<int:lavoura_id>/remover/', remove_lavoura, name='remove_lavoura'),
+    path('culturas/gerenciar/', gerenciar_culturas, name='gerenciar_culturas'),
+    path('ordens/planejar/<int:ordem_id>/', ordens_planejadas, name='planejar_ordem'),
+    path('ordens/filtrar/', lista_ordens, name='filtrar_ordens'),
 ]

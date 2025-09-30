@@ -34,4 +34,5 @@ urlpatterns = [
     path('comercial/', include('comercial.urls')),
     path('dashboard-master/', include('dashboard_master.urls')),
     path('fluxogramas/', fluxogramas, name='fluxogramas'),
+    path('fiscal/', include('fiscal.urls')),
 ]

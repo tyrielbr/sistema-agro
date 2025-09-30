@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Lavouras{% endblock %}
+{% block content %}
+  <div class="container mt-4">
+    <h2>Lavouras Ativas</h2>
+    <a href="{% url 'cria_lavoura' %}" class="btn btn-success mb-3">Criar Nova Lavoura</a>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Talhão</th>
+          <th>Cultura</th>
+          <th>Data Plantio</th>
+          <th>Irrigado</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lavoura in lavouras %}
+          <tr>
+            <td>{{ lavoura.talhao.nome }}</td>
+            <td>{{ lavoura.cultura.nome }}</td>
+            <td>{{ lavoura.data_plantio }}</td>
+            <td>{{ lavoura.irrigado|yesno:"Sim,Não" }}</td>
+            <td>
+              <a href="{% url 'remove_lavoura' lavoura.id %}" class="btn btn-danger btn-sm">Remover</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">Nenhuma lavoura ativa.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

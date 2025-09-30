@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>NF-e Recebidas</h1>
+<form method="get" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <input type="date" name="data_inicio" class="form-control" value="{{ data_inicio }}">
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="data_fim" class="form-control" value="{{ data_fim }}">
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="emitente" class="form-control" placeholder="Emitente">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{% url 'fiscal_dashboard' %}" class="btn btn-secondary">Atualizar</a>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead><tr><th>Chave NF-e</th><th>Data Emissão</th><th>Emitente</th><th>Valor Total</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for nf in nf_list %}
+        <tr><td>{{ nf.chave_nfe }}</td><td>{{ nf.data_emissao }}</td><td>{{ nf.emitente_cnpj }}</td><td>R$ {{ nf.valor_total }}</td><td>{{ nf.get_status_display }}</td><td><a href="{% url 'detalhes_nf' nf.pk %}" class="btn btn-info">Detalhes</a></td></tr>
+        {% empty %}
+        <tr><td colspan="6">Nenhuma NF-e recebida.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,142 @@
+[
+    {
+        "model": "agricola.Cultura",
+        "pk": 1,
+        "fields": {
+            "nome": "Milho",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 110,
+            "classificacao": "grao",
+            "necessidade_hidrica": 500.00,
+            "observacoes": "Ciclo precoce pra safrinha; resistente a seca, mas precisa de drenagem boa (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 2,
+        "fields": {
+            "nome": "Soja",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 120,
+            "classificacao": "leguminosa",
+            "necessidade_hidrica": 450.00,
+            "observacoes": "Fixa N no solo; precoce (90 dias) pra rotação com milho safrinha (CONAB/BASF)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 3,
+        "fields": {
+            "nome": "Feijão",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 110,
+            "classificacao": "leguminosa",
+            "necessidade_hidrica": 400.00,
+            "observacoes": "Ciclo curto pra múltiplas safras; solos drenados evitam doenças (BASF)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 4,
+        "fields": {
+            "nome": "Trigo",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 100,
+            "ciclo_max": 120,
+            "classificacao": "grao",
+            "necessidade_hidrica": 350.00,
+            "observacoes": "Inverno; tolera frio, mas precisa de 15°C+ pra germinação (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 5,
+        "fields": {
+            "nome": "Milho Semente",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 115,
+            "classificacao": "grao",
+            "necessidade_hidrica": 500.00,
+            "observacoes": "Manejo pra pureza genética; isolamento recomendado (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 6,
+        "fields": {
+            "nome": "Tomate",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 120,
+            "classificacao": "hortalica",
+            "necessidade_hidrica": 600.00,
+            "observacoes": "Sensível a pragas; irrigação gota-a-gota ideal (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 7,
+        "fields": {
+            "nome": "Cebola",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 100,
+            "ciclo_max": 120,
+            "classificacao": "hortalica",
+            "necessidade_hidrica": 400.00,
+            "observacoes": "Solos leves; plantio em mudas acelera (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 8,
+        "fields": {
+            "nome": "Alho",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 120,
+            "classificacao": "hortalica",
+            "necessidade_hidrica": 450.00,
+            "observacoes": "Colheita quando folhas secam; adapta a temperado (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 9,
+        "fields": {
+            "nome": "Sorgo",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 110,
+            "classificacao": "grao",
+            "necessidade_hidrica": 400.00,
+            "observacoes": "Resistente seca; safrinha alternativa ao milho (Embrapa)."
+        }
+    },
+    {
+        "model": "agricola.Cultura",
+        "pk": 10,
+        "fields": {
+            "nome": "Milheto",
+            "periodo_ideal_inicio": "2025-09-01",
+            "periodo_ideal_fim": "2025-12-31",
+            "ciclo_min": 90,
+            "ciclo_max": 105,
+            "classificacao": "grao",
+            "necessidade_hidrica": 350.00,
+            "observacoes": "Crescimento rápido pra forragem/rotação (Embrapa)."
+        }
+    }
+]

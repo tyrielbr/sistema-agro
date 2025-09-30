@@ -1,50 +1,118 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Dashboard Fazendas</h1>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card fade-in">
-            <div class="card-body">
-                <h2>Fazendas Cadastradas</h2>
-                <p>Total: {{ fazendas.count }}</p>
-                <table class="table">
-                    <thead><tr><th>Nome</th><th>Área Total</th><th>Ações</th></tr></thead>
-                    <tbody>
-                        {% for fazenda in fazendas %}
-                        <tr>
-                            <td>{{ fazenda.nome }}</td>
-                            <td>{{ fazenda.area_total }} ha</td>
-                            <td><a href="{% url 'mapa_talhao' fazenda.id %}" class="btn btn-primary">Ver Mapa</a></td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="3">Nenhuma fazenda cadastrada.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <a href="{% url 'cria_fazenda' %}" class="btn btn-success">Cadastrar Fazenda</a>
-            </div>
+<div class="container mt-4">
+    <h1>Dashboard Fazendas</h1>
+    <div class="row">
+        <!-- Left Column: Hierarchical List of Fazendas, Áreas, and Talhões -->
+        <div class="col-md-8">
+            <h2>Propriedades e Subdivisões</h2>
+            {% if fazendas or arrendamentos %}
+                <!-- Fazendas -->
+                <h3>Fazendas</h3>
+                <ul class="list-group mb-3">
+                    {% for fazenda in fazendas %}
+                        <li class="list-group-item">
+                            <strong>{{ fazenda.nome }}</strong> ({{ fazenda.area_total }} ha)
+                            <a href="{% url 'detalhes_propriedade' 'fazenda' fazenda.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                            <!-- Áreas da Fazenda -->
+                            {% with areas=fazenda.area_set.all %}
+                                {% if areas %}
+                                    <ul class="list-group mt-2">
+                                        {% for area in areas %}
+                                            <li class="list-group-item">
+                                                Área: {{ area.nome }} ({{ area.area }} ha)
+                                                <a href="{% url 'detalhes_area' area.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                                                <!-- Talhões da Área -->
+                                                {% with talhoes=area.talhao_set.all %}
+                                                    {% if talhoes %}
+                                                        <ul class="list-group mt-2">
+                                                            {% for talhao in talhoes %}
+                                                                <li class="list-group-item">
+                                                                    Talhão: {{ talhao.nome }} ({{ talhao.area_size|default:"N/A" }} ha)
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        <p class="text-muted mt-2">Nenhum talhão cadastrado.</p>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted mt-2">Nenhuma área cadastrada.</p>
+                                {% endif %}
+                            {% endwith %}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">Nenhuma fazenda cadastrada.</li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Arrendamentos -->
+                <h3>Arrendamentos</h3>
+                <ul class="list-group mb-3">
+                    {% for arrendamento in arrendamentos %}
+                        <li class="list-group-item">
+                            <strong>{{ arrendamento.nome }}</strong> ({{ arrendamento.area_total }} ha)
+                            <a href="{% url 'detalhes_propriedade' 'arrendamento' arrendamento.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                            <!-- Áreas do Arrendamento -->
+                            {% with areas=arrendamento.area_set.all %}
+                                {% if areas %}
+                                    <ul class="list-group mt-2">
+                                        {% for area in areas %}
+                                            <li class="list-group-item">
+                                                Área: {{ area.nome }} ({{ area.area }} ha)
+                                                <a href="{% url 'detalhes_area' area.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                                                <!-- Talhões da Área -->
+                                                {% with talhoes=area.talhao_set.all %}
+                                                    {% if talhoes %}
+                                                        <ul class="list-group mt-2">
+                                                            {% for talhao in talhoes %}
+                                                                <li class="list-group-item">
+                                                                    Talhão: {{ talhao.nome }} ({{ talhao.area_size|default:"N/A" }} ha)
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        <p class="text-muted mt-2">Nenhum talhão cadastrado.</p>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted mt-2">Nenhuma área cadastrada.</p>
+                                {% endif %}
+                            {% endwith %}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">Nenhum arrendamento cadastrado.</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Nenhuma propriedade cadastrada.</p>
+            {% endif %}
         </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card fade-in">
-            <div class="card-body">
-                <h2>Resumo de Talhões</h2>
-                <p>Total: {{ talhoes_count }}</p>
-                <canvas id="talhoesChart"></canvas>
-                <script>
-                    var ctx = document.getElementById('talhoesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Talhões'],
-                            datasets: [{
-                                label: 'Total',
-                                data: [{{ talhoes_count|default:0 }}],
-                                backgroundColor: 'var(--secondary-green)'
-                            }]
-                        }
-                    });
-                </script>
+
+        <!-- Right Column: Navigation Links -->
+        <div class="col-md-4">
+            <h2>Ações</h2>
+            <div class="card">
+                <div class="card-header">Cadastros</div>
+                <div class="card-body">
+                    <a href="{% url 'cria_pessoa' %}" class="btn btn-success btn-block mb-2">Cadastrar Proprietário/Sócio</a>
+                    <a href="{% url 'cria_fazenda' %}" class="btn btn-success btn-block mb-2">Cadastrar Fazenda</a>
+                    <a href="{% url 'cria_arrendamento' %}" class="btn btn-success btn-block mb-2">Cadastrar Arrendamento</a>
+                    <a href="{% url 'cria_area' %}" class="btn btn-success btn-block mb-2">Cadastrar Área</a>
+                    <a href="{% url 'cria_talhao' %}" class="btn btn-success btn-block mb-2">Cadastrar Talhão</a>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">Visualizações</div>
+                <div class="card-body">
+                    <a href="{% url 'lista_propriedades' %}" class="btn btn-primary btn-block mb-2">Listar Propriedades</a>
+                </div>
             </div>
         </div>
     </div>

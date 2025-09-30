@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Insumo
+from fiscal.models import NfRecebida
 
 @login_required
 def dashboard(request):
