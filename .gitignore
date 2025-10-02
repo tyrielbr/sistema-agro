@@ -15,10 +15,12 @@ env/
 
 # Django
 *.log
+!logs/.gitkeep
 *.pot
 *.sqlite3
-migrations/
-*.migrations
+# Migrations - keep folder structure but ignore migration files
+*/migrations/*.py
+!*/migrations/__init__.py
 local_settings.py
 *.bak
 

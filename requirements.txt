@@ -25,7 +25,6 @@ ofxtools==0.9.5
 packaging==25.0
 pillow==11.3.0
 prompt_toolkit==3.0.52
-psycopg2-binary==2.9.10
 pycparser==2.23
 python-dateutil==2.9.0.post0
 python-decouple==3.8

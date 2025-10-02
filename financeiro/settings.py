@@ -63,12 +63,8 @@ WSGI_APPLICATION = 'sistema_agropecuario.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistema_agro_db',
-        'USER': config('DB_USER', default='seu_usuario'),
-        'PASSWORD': config('DB_PASSWORD', default='sua_senha'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

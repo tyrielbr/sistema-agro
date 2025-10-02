@@ -64,12 +64,8 @@ WSGI_APPLICATION = 'sistema_agropecuario.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistema_agro_db',
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -112,7 +108,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/felip/sistema-agropecuario/celery.log',
+            'filename': BASE_DIR / 'logs' / 'celery.log',
         },
         'console': {
             'level': 'INFO',
